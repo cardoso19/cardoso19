@@ -10,7 +10,10 @@ import SwiftUI
 struct Item: Identifiable {
     let id = UUID()
     let icon: String
+    let isIconEmoji: Bool
     let iconColor: Color
     let color: Color
     let text: String
+    let textColor: Color
+    let font: Font
 }

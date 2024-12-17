@@ -12,25 +12,26 @@ struct ContentView: View {
     let items: [Item]
     
     var body: some View {
-        HStack {
-            VStack {
-                VStack(alignment: .leading) {
-                    Text(title)
-                        .foregroundColor(.red)
-                        .fontWeight(.bold)
-                        .font(.largeTitle)
-                    VStack(alignment: .leading) {
-                        ForEach(items) { item in
-                            ListItemView(item: item)
-                            if item.id != items.last?.id {
-                                Divider()
-                            }
-                        }
-                    }
-                }.padding(BaseDimension.multipliedBy(3))
-                Spacer()
-            }
+        VStack(alignment: .leading, spacing: .zero) {
+            titleView
+            list
             Spacer()
+        }
+    }
+    
+    private var titleView: some View {
+        Text(title)
+            .foregroundColor(.white)
+            .fontWeight(.bold)
+            .font(.largeTitle)
+            .padding(.horizontal, BaseDimension.times(2))
+            .padding(.top, BaseDimension.times(2))
+            .padding(.bottom, BaseDimension.times(1))
+    }
+    
+    private var list: some View {
+        ForEach(items) { item in
+            ListItemView(item: item)
         }
     }
 }
@@ -40,9 +41,12 @@ struct ContentView_Previews: PreviewProvider {
         ContentView(title: "Title",
                     items: [
                         Item(icon: "swift",
+                             isIconEmoji: false,
                              iconColor: .white,
                              color: .red,
-                             text: "Swift")
+                             text: "Swift",
+                             textColor: .white,
+                             font: .headline)
         ])
     }
 }

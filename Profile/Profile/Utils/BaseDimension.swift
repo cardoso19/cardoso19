@@ -10,7 +10,7 @@ import Foundation
 enum BaseDimension {
     private static let baseValue: CGFloat = 8
     
-    static func multipliedBy(_ value: CGFloat) -> CGFloat {
+    static func times(_ value: CGFloat) -> CGFloat {
         baseValue * value
     }
 }

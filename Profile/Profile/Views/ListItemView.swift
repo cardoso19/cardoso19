@@ -12,29 +12,66 @@ struct ListItemView: View {
     var item: Item
     
     var body: some View {
-        HStack(alignment: .top,
-               spacing: BaseDimension.multipliedBy(3)) {
-            Image(systemName: item.icon)
-                .foregroundColor(item.iconColor)
-                .frame(width: BaseDimension.multipliedBy(4),
-                       height: BaseDimension.multipliedBy(4))
-                .background(item.color)
-                .cornerRadius(BaseDimension.multipliedBy(1))
+        cardView
+            .padding(.vertical, BaseDimension.times(1))
+            .padding(.horizontal, BaseDimension.times(2))
+    }
+    
+    private var emojiIcon: some View {
+        Text(item.icon)
+            .font(.system(size: BaseDimension.times(10)))
+            .foregroundStyle(item.iconColor)
+            .frame(width: BaseDimension.times(10), height: BaseDimension.times(10))
+            .padding(.bottom, -BaseDimension.times(4))
+            .padding(.trailing, BaseDimension.times(10))
+    }
+    
+    private var icon: some View {
+        Image(systemName: item.icon)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .foregroundStyle(item.iconColor)
+            .frame(width: BaseDimension.times(10),
+                   height: BaseDimension.times(10))
+            .padding(.bottom, -BaseDimension.times(4))
+            .padding(.trailing, BaseDimension.times(10))
+    }
+    
+    private var text: some View {
+        VStack(spacing: .zero) {
             Text(item.text)
-                .font(.title3)
-                .padding(EdgeInsets(top: BaseDimension.multipliedBy(1),
-                                    leading: .zero,
-                                    bottom: .zero,
-                                    trailing: .zero))
+                .font(item.font)
+                .foregroundStyle(item.textColor)
+                .padding(BaseDimension.times(2))
+            Spacer()
         }
+    }
+    
+    private var cardView: some View {
+        HStack(spacing: .zero) {
+            text
+            Spacer(minLength: BaseDimension.times(1))
+            if item.isIconEmoji {
+                emojiIcon
+            } else {
+                icon
+            }
+        }
+        .frame(height: BaseDimension.times(10))
+        .frame(maxWidth: .infinity)
+        .background(item.color)
+        .clipShape(RoundedRectangle(cornerRadius: BaseDimension.times(3)))
     }
 }
 
 struct ListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        ListItemView(item: Item(icon: "swift",
+        ListItemView(item: Item(icon: "swift", 
+                                isIconEmoji: false,
                                 iconColor: .white,
                                 color: .red,
-                                text: "Swift"))
+                                text: "Swift", 
+                                textColor: .white,
+                                font: .headline))
     }
 }
